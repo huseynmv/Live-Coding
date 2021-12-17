@@ -10,23 +10,24 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <form class="mb-5" action="/admin/projects" method="POST" enctype="multipart/form-data">
-                        <h2>Add new project</h2>
+                    <form class="mb-5" action="/adminhome/timeline" method="POST" enctype="multipart/form-data">
+                        <h2>Add new timeline</h2>
                         <hr>
                         <div class="mb-3">
                           
-                          <input type="text" class="form-control" name="project_name" placeholder="Project name..">
+                          <input type="text" class="form-control" name="timeline_year" placeholder="Year of timeline..">
                           
                         </div>
                         <div class="mb-3">
                           
-                            <input type="text" class="form-control" name="project_url" placeholder="Project link..">
+                            <input type="text" class="form-control" name="timeline_description" placeholder="Timeline Description..">
                             
                           </div>
-                        <div class="mb-3">
+                          <div class="mb-3">
                           
-                          <input type="file" class="form-control btn btn-warning" name="project_img">
-                        </div>
+                            <input type="text" class="form-control" name="timeline_number" placeholder="Timeline Number..">
+                            
+                          </div>
                         
                         <button type="submit" class="btn btn-primary">Submit</button>
                         
@@ -45,28 +46,31 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Projects Table</h4>
+                        <h4 class="card-title">All timeline</h4>
                         <h6 class="card-subtitle">Add project <code>.table</code></h6>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Name</th>
-                                        <th>Link</th>
-                                        <th>Update</th>
+                                        <th>Year</th>
+                                        <th>Description</th>
+                                        <th>Number</th>
                                         <th>Delete</th>
+                                        <th>Update</th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for project in projects %}
+                                    {% for i in timelines %}
                                     <tr>
-                                        <td>{{project.id}}</td>
-                                        <td>{{project.project_name}}</td>
-                                        <td>{{project.project_url}}</td>
-                                        <td><a href="/projectUpdate/{{project.id}}"><i class="fas fa-pencil-alt"></i></a></td>
-                                        <td><a href="/projectDelete/{{project.id}}"><i class="bi bi-trash-fill"></i></a></td>
+                                        <td>{{i.id}}</td>
+                                        <td>{{i.timeline_year}}</td>
+                                        <td>{{i.timeline_description}}</td>
+                                        <td>{{i.timeline_number}}</td>
+                                        <td><a href="/adminhome/timeline/delete/{{i.id}}"><i class="bi bi-trash-fill"></i></a></td>
+                                        <td><a href="/adminhome/timeline/update/{{i.id}}"><i class="fas fa-pencil-alt"></i></a></td>
+
                                     </tr>
                                     {% endfor %}
 

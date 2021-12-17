@@ -10,12 +10,12 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <form class="mb-5" action="/admin/blog" method="POST" enctype="multipart/form-data">
+                    <form class="mb-5" action="/adminhome/blog" method="POST" enctype="multipart/form-data">
                         <h2>Add new blog</h2>
                         <hr>
                         <div class="mb-3">
                           
-                          <input type="text" class="form-control" name="blog_name" placeholder="Blog name..">
+                          <input type="text" class="form-control" name="blog_title" placeholder="Blog name..">
                           
                         </div>
                         <div class="mb-3">
@@ -25,7 +25,7 @@
                           </div>
                         <div class="mb-3">
                           
-                            <input type="date"  class="form-control" name="blog_dateTime">
+                            <input type="text"  class="form-control" name="blog_description" placeholder="Blog description..">
                             
                           </div>
                         <div class="mb-3">
@@ -57,11 +57,11 @@
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Name</th>
+                                        <th>Title</th>
                                         <th>Link</th>
-                                        <th>Date</th>
-                                        <th>Update</th>
+                                        <th>Description</th>
                                         <th>Delete</th>
+                                        <th>Update</th>
                                         
                                     </tr>
                                 </thead>
@@ -69,11 +69,14 @@
                                     {% for blog in blogs %}
                                     <tr>
                                         <td>{{blog.id}}</td>
-                                        <td>{{blog.blog_name}}</td>
+                                        <td>{{blog.blog_title}}</td>
                                         <td>{{blog.blog_url}}</td>
-                                        <td>{{blog.blog_dateTime}}</td>
-                                        <td><a href="/blogUpdate/{{blog.id}}"><i class="fas fa-pencil-alt"></i></a></td>
-                                        <td><a href="/blogDelete/{{blog.id}}"><i class="bi bi-trash-fill"></i></a></td>
+                                        <td>{{blog.blog_description}}</td>
+                                        <td><a href="/adminhome/blog/delete/{{blog.id}}"><i class="bi bi-trash-fill"></i></a></td>
+                                        <td><a href="/adminhome/blog/update/{{blog.id}}"><i class="fas fa-pencil-alt"></i></a></td>
+
+
+
                                     </tr>
                                     {% endfor %}
 

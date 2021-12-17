@@ -77,3 +77,83 @@ def works_update(id):
         db.session.commit()
         return redirect("/adminhome/works")
     return render_template("admin/works-update.html", works=works)
+
+
+@app.route('/adminhome/timeline', methods= ["GET","POST"])
+def timeline():
+    from models import TimeLine
+    timelines = TimeLine.query.all()
+    if request.method == 'POST':
+        timeline = TimeLine(
+            timeline_year=request.form['timeline_year'],
+            timeline_description=request.form['timeline_description'],
+            timeline_number=request.form['timeline_number']
+        )
+        db.session.add(timeline)
+        db.session.commit()
+        return redirect('/adminhome/timeline')
+    return render_template('admin/timeline.html', timelines=timelines)
+
+@app.route("/adminhome/timeline/delete/<int:id>")
+def delete_timeline(id):
+    from models import TimeLine
+    timeline = TimeLine.query.filter_by(id=id).first()
+    db.session.delete(timeline)
+    db.session.commit()
+    return redirect("/adminhome/timeline")
+
+@app.route("/adminhome/timeline/update/<int:id>", methods= ["GET","POST"])
+def timeline_update(id):
+    from models import TimeLine
+    timelines = TimeLine.query.filter_by(id=id).first()
+    if request.method == 'POST':
+        timeline = TimeLine.query.filter_by(id=id).first()
+        timeline.timeline_year = request.form["timeline_year"]
+        timeline.timeline_description = request.form["timeline_description"]
+        timeline.timeline_number = request.form["timeline_number"]
+        db.session.commit()
+        return redirect("/adminhome/timeline")
+    return render_template("admin/timeline_update.html", timelines=timelines)
+
+
+
+@app.route("/adminhome/blog", methods = ["GET","POST"])
+def admin_blog():
+    from models import Blog
+    import os
+    blogs = Blog.query.all()
+    if request.method == 'POST':
+        file = request.files['blog_img']
+        filename = file.filename
+        file.save(os.path.join("static/uploads/",filename))
+        blog = Blog(
+            blog_title = request.form["blog_title"],
+            blog_description = request.form["blog_description"],
+            blog_img =filename,
+            blog_url = request.form["blog_url"]
+        )
+        db.session.add(blog)
+        db.session.commit()
+        return redirect("/adminhome/blog")
+    return render_template("admin/blog.html", blogs=blogs)
+
+@app.route("/adminhome/blog/delete/<int:id>")
+def delete_blog(id):
+    from models import Blog
+    blog = Blog.query.filter_by(id=id).first()
+    db.session.delete(blog)
+    db.session.commit()
+    return redirect("/adminhome/blog")
+
+@app.route("/adminhome/blog/update/<int:id>", methods= ["GET","POST"])
+def blog_update(id):
+    from models import Blog
+    blogs = Blog.query.filter_by(id=id).first()
+    if request.method == 'POST':
+        blog = Blog.query.filter_by(id=id).first()
+        blog.blog_title = request.form["blog_title"]
+        blog.blog_description = request.form["blog_description"]
+        blog.blog_url = request.form["blog_url"]
+        db.session.commit()
+        return redirect("/adminhome/blog")
+    return render_template("admin/update_blog.html", blogs=blogs)
